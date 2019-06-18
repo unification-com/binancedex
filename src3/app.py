@@ -8,17 +8,28 @@ import pymysql
 import time
 import requests as req
 import datetime
+import json
 from collections import OrderedDict
 
-hostname = 'localhost'
-username = 'root'
-password = 'Binance@123'
-database = 'binance'
+with open('config.json', 'r') as f:
+    config = json.load(f)
 
-marketPair = 'ANKR-E97_BNB'
+hostname = config['DATABASE']['HOST']
+username = config['DATABASE']['USER']
+password = config['DATABASE']['PASSWORD']
+database = config['DATABASE']['DBNAME']
+
+marketPair = config['TOKEN']['PAIR']
 
 
 app = Flask(__name__)
+
+def extractTime(jsonObj):
+    try:
+        return int(jsonObj['timestamp'])
+    except:
+        return 0
+
 
 @app.route("/")
 def main():
@@ -71,7 +82,7 @@ def getTraders():
     myresult = cur.fetchall()
     finalResult = []
     for d in myresult:
-        finalResult.append({d[0]:resultDict[d[0]]})
+        finalResult.append({d[0]:sorted(resultDict[d[0]],key=lambda i:i['timestamp'])})
 
     return jsonify(finalResult)
 

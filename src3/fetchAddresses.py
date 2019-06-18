@@ -3,23 +3,28 @@ import sys
 import re
 import pymysql
 import requests as req
+import json
 
-hostname = 'localhost'
-username = 'root'
-password = 'Binance@123'
-database = 'binance'
+
+
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+hostname = config['DATABASE']['HOST']
+username = config['DATABASE']['USER']
+password = config['DATABASE']['PASSWORD']
+database = config['DATABASE']['DBNAME']
 
 conn = pymysql.connect(
 host=hostname, user=username, passwd=password, db=database)
 cur = conn.cursor()
 cursor = conn.cursor()
-print('done')
 
-token = 'ANKR-E97'
+baseAsset = config['TOKEN']['BASE']
 
 def gettradersAddressesFromDatabase():
     try:
-        sql_select_Query = "select * from Addresses where token='"+ token +"'"
+        sql_select_Query = "select * from Addresses where token='"+ baseAsset +"'"
         conn = pymysql.connect(
         host=hostname, user=username, passwd=password, db=database)
         cursor = conn.cursor()
@@ -56,10 +61,10 @@ def insertRecordIntoDatabase(token,address):
         cursor.close
 
 def gettradersAddressesFromDex():
-    addressData = req.get('https://explorer.binance.org/api/v1/asset-holders?page=1&rows=5&asset='+ token).json()
+    addressData = req.get('https://explorer.binance.org/api/v1/asset-holders?page=1&rows=5&asset='+ baseAsset).json()
     assetsHolders = addressData['addressHolders']
     totelCount=addressData['totalNum']
-    addressData = req.get('https://explorer.binance.org/api/v1/asset-holders?page=1&rows='+str(totelCount)+'&asset='+token).json()
+    addressData = req.get('https://explorer.binance.org/api/v1/asset-holders?page=1&rows='+str(totelCount)+'&asset='+baseAsset).json()
     assetsHolders = addressData['addressHolders']
     addressSet = set()
     for d in assetsHolders:

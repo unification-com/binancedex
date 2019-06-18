@@ -3,21 +3,27 @@ import sys
 import re
 import pymysql
 import time
+import json
 import requests as req
 import datetime
 
-hostname = 'localhost'
-username = 'root'
-password = 'Binance@123'
-database = 'binance'
+
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+hostname = config['DATABASE']['HOST']
+username = config['DATABASE']['USER']
+password = config['DATABASE']['PASSWORD']
+database = config['DATABASE']['DBNAME']
+
+symbol = config['TOKEN']['PAIR']
+token = config['TOKEN']['BASE']
 
 conn = pymysql.connect(
 host=hostname, user=username, passwd=password, db=database)
 cur = conn.cursor()
 cursor = conn.cursor()
 
-symbol = 'ANKR-E97_BNB'
-token = 'ANKR-E97'
 
 def insertTransactionstoDB(data):
     try:
