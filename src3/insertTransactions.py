@@ -36,9 +36,9 @@ def insertTransactionstoDB(data):
             return
 
         query = "INSERT INTO `Transactions` (`Order ID`, `SYMBOL`,`transactionHash`,`Owner`,`Price`,`quantity`,`side`,`total`,`orderCreateTime`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        result = cursor.execute(query, (data["orderId"],data["symbol"],data["transactionHash"],data["owner"],data["price"],data["quantity"],int(data["side"]),float(data["price"])*float(data["quantity"]),datetime.datetime.strptime(data["orderCreateTime"], '%Y-%m-%dT%H:%M:%S.%fZ')
+        result = cursor.execute(query, (data["orderId"],data["symbol"],data["transactionHash"],data["owner"],data["price"],data["quantity"],int(data["side"]),float(data["price"])*float(data["quantity"]),datetime.datetime.strptime(data["transactionTime"], '%Y-%m-%dT%H:%M:%S.%fZ')
         ))
-       
+
         conn.commit()
         #time.sleep(10)
         #print("Record inserted succssfully")
@@ -56,16 +56,16 @@ def gettransactionsFromDex(add):
     for o in orders:
         #print(o);
         try:
-            if(o['status'] == 'PartialFill' or o['status'] == 'FullyFill'): 
+            if(o['status'] == 'PartialFill' or o['status'] == 'FullyFill'):
                 insertTransactionstoDB(o);
         except Exception as ex:
             print("Exception in inserting record" + ex)
-            
+
 
 def gettradersAddressesFromDatabase():
     try:
         sql_select_Query = "select * from Addresses where token='" + token  + "'"
-        cursor = conn.cursor() 
+        cursor = conn.cursor()
         cursor.execute(sql_select_Query)
         records = cursor.fetchall()
         addressDBSet = set()
@@ -76,7 +76,7 @@ def gettradersAddressesFromDatabase():
         return addressDBSet
     except Exception as ex:
         print ("Error while connecting to MySQL", ex)
-        
+
 
     finally:
         cursor.close()

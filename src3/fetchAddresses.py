@@ -77,4 +77,4 @@ addressDBSet=gettradersAddressesFromDatabase()
 RecrodstoInsert=addressDexSet-addressDBSet;
 #print(RecrodstoInsert)
 for d in RecrodstoInsert:
-	insertRecordIntoDatabase(token,d)
+	insertRecordIntoDatabase(baseAsset,d)
