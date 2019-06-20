@@ -40,7 +40,7 @@ def main():
 def getTraders():
     conn = pymysql.connect(host=hostname, user=username, passwd=password, db=database)
     cur = conn.cursor()
-    cur.execute("SELECT Owner, side, DATE(ordercreatetime) AS dated, SUM(total) AS value FROM Transactions WHERE symbol = '" + marketPair + "' GROUP BY Owner, side, DATE(ordercreatetime) ORDER BY value desc, dated DESC")
+    cur.execute("SELECT Owner, side, DATE(ordercreatetime) AS dated, SUM(total) AS value, SUM(quantity) as quantity FROM Transactions WHERE symbol = '" + marketPair + "' GROUP BY Owner, side, DATE(ordercreatetime) ORDER BY value desc, dated DESC")
     row_headers=[x[0] for x in cur.description]
     myresult = cur.fetchall()
     json_data=[]
@@ -51,9 +51,9 @@ def getTraders():
         if key not in resultDict:
             dataArray = []
             if(result[1] == 1) :
-                dataArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':result[3], 'sold':0.0,'timestamp':dt})
+                dataArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':result[3], 'sold':0.0,'timestamp':dt,'quantityBuy':result[4], 'quantitySell':0})
             else :
-                dataArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':0.0, 'sold':result[3],'timestamp':dt})
+                dataArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':0.0, 'sold':result[3],'timestamp':dt,'quantityBuy':0, 'quantitySell':result[4]})
             resultDict.update({key:dataArray})
         
         else:
@@ -64,14 +64,16 @@ def getTraders():
                     match = True
                     if(result[1]== 1):                        
                         a.update({'bought':result[3]})
+                        a.update({'quantityBuy':result[4]})
                     else:
                         a.update({'sold':result[3]})
+                        a.update({'quantitySell':result[4]})
             
             if not match :                
                 if(result[1] == 1) :
-                    dArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':result[3], 'sold':0.0,'timestamp':dt})
+                    dArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':result[3], 'sold':0.0,'timestamp':dt,'quantityBuy':result[4], 'quantitySell':0})
                 else :
-                    dArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':0.0, 'sold':result[3],'timestamp':dt})
+                    dArray.append({'dated':(result[2]).strftime("%d-%m-%Y"),'bought':0.0, 'sold':result[3],'timestamp':dt,'quantityBuy':0, 'quantitySell':result[4]})
                 
 
                 
