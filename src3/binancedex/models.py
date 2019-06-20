@@ -29,43 +29,43 @@ class Transaction(Base):
     __tablename__ = 'transaction'
 
     id = Column(Integer, primary_key=True)
-    orderId = Column(String)
+    order_id = Column(String)
     symbol = Column(String)
     price = Column(Float)
     quantity = Column(Float)
-    cumulateQuantity = Column(Float)
+    cumulate_quantity = Column(Float)
     fee = Column(String)
-    orderCreateTime = Column(DateTime)
-    transactionTime = Column(DateTime)
+    order_create_time = Column(DateTime)
+    transaction_time = Column(DateTime)
     status = Column(String)
-    timeInForce = Column(Integer)
+    time_in_force = Column(Integer)
     side = Column(Integer)
-    transactionType = Column(Integer)
-    tradeId = Column(String)
-    lastExecutedPrice = Column(Float)
-    lastExecutedQuantity = Column(Float)
-    transactionHash = Column(String)
+    transaction_type = Column(Integer)
+    trade_id = Column(String)
+    last_executed_price = Column(Float)
+    last_executed_quantity = Column(Float)
+    transaction_hash = Column(String)
 
     def __init__(self, orderId, symbol, price, quantity, cumulateQuantity, fee,
                  orderCreateTime, transactionTime, status, timeInForce, side,
                  transactionType, tradeId, lastExecutedPrice,
                  lastExecutedQuantity, transactionHash):
-        self.orderId = orderId
+        self.order_id = orderId
         self.symbol = symbol
         self.price = price
         self.quantity = quantity
-        self.cumulateQuantity = cumulateQuantity
+        self.cumulate_quantity = float(cumulateQuantity)
         self.fee = fee
-        self.orderCreateTime = orderCreateTime
-        self.transactionTime = transactionTime
+        self.order_create_time = orderCreateTime
+        self.transaction_time = transactionTime
         self.status = status
-        self.timeInForce = timeInForce
+        self.time_in_force = timeInForce
         self.side = side
-        self.transactionType = transactionType
-        self.tradeId = tradeId
-        self.lastExecutedPrice = lastExecutedPrice
-        self.lastExecutedQuantity = lastExecutedQuantity
-        self.transactionHash = transactionHash
+        self.transaction_type = transactionType
+        self.trade_id = tradeId
+        self.last_executed_price = lastExecutedPrice
+        self.last_executed_quantity = lastExecutedQuantity
+        self.transaction_hash = transactionHash
 
     @staticmethod
     def from_order(o):
