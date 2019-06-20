@@ -8,7 +8,7 @@ import requests as req
 import datetime
 
 
-with open('config.json', 'r') as f:
+with open('/home/ubuntu/BinanceProject/config.json', 'r') as f:
     config = json.load(f)
 
 hostname = config['DATABASE']['HOST']
@@ -31,12 +31,12 @@ def insertTransactionstoDB(data):
         cursor = conn.cursor()
         query = "select transactionHash from Transactions where transactionHash = %s and side = %s"
         result = cursor.execute(query,(data["transactionHash"], int(data["side"])))
-        print(result)
+        #print(result)
         if(result > 0 ):
             return
 
         query = "INSERT INTO `Transactions` (`Order ID`, `SYMBOL`,`transactionHash`,`Owner`,`Price`,`quantity`,`side`,`total`,`orderCreateTime`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        result = cursor.execute(query, (data["orderId"],data["symbol"],data["transactionHash"],data["owner"],data["price"],data["quantity"],int(data["side"]),float(data["price"])*float(data["quantity"]),datetime.datetime.strptime(data["transactionTime"], '%Y-%m-%dT%H:%M:%S.%fZ')
+        result = cursor.execute(query, (data["orderId"],data["symbol"],data["transactionHash"],data["owner"],data["price"],data["cumulateQuantity"],int(data["side"]),float(data["price"])*float(data["cumulateQuantity"]),datetime.datetime.strptime(data["transactionTime"], '%Y-%m-%dT%H:%M:%S.%fZ')
         ))
 
         conn.commit()
@@ -49,7 +49,7 @@ def insertTransactionstoDB(data):
         cursor.close
 
 def gettransactionsFromDex(add):
-    millis = int(round(time.time() * 1000) - (8*60*60*1000))
+    millis = int(round(time.time() * 1000) - (80*60*60*1000))
     ordersDataBuy = req.get('https://dex.binance.org/api/v1/orders/closed?address='+add+'&start='+str(millis)+'&symbol='+symbol+'&limit=500').json()
     #print(ordersDataBuy)
     orders = ordersDataBuy['order']

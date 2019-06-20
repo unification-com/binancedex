@@ -7,7 +7,7 @@ import json
 
 
 
-with open('config.json', 'r') as f:
+with open('/home/ubuntu/BinanceProject/config.json', 'r') as f:
     config = json.load(f)
 
 hostname = config['DATABASE']['HOST']
@@ -54,7 +54,7 @@ def insertRecordIntoDatabase(token,address):
         ))
 
         conn.commit()
-        print("Record inserted succssfully")
+        #print("Record inserted succssfully")
     except Exception as ex:
         print("Exception in inserting record" + ex)
     finally:
@@ -75,6 +75,6 @@ def gettradersAddressesFromDex():
 addressDexSet=gettradersAddressesFromDex()
 addressDBSet=gettradersAddressesFromDatabase()
 RecrodstoInsert=addressDexSet-addressDBSet;
-#print(RecrodstoInsert)
+print(RecrodstoInsert)
 for d in RecrodstoInsert:
 	insertRecordIntoDatabase(baseAsset,d)
