@@ -48,12 +48,22 @@ def render():
 
 
 def get_fees(trade):
-    buyer_currency, buyer_amount = trade.buyer_fee[0:-1].split(':')
-    seller_currency, seller_amount = trade.seller_fee[0:-1].split(':')
+    """
+    Fees can be a little bit complicated:
+    #Cxl:1;BNB:0.00010432;
 
-    if buyer_currency == 'BNB' and seller_currency == 'BNB':
-        return float(buyer_amount), float(seller_amount)
-    else:
+    :return:
+    """
+    try:
+        buyer_currency, buyer_amount = trade.buyer_fee[0:-1].split(':')
+        seller_currency, seller_amount = trade.seller_fee[0:-1].split(':')
+        if buyer_currency == 'BNB' and seller_currency == 'BNB':
+            return float(buyer_amount), float(seller_amount)
+        else:
+            # TODO: Fix this slippage
+            return 0, 0
+
+    except Exception as e:
         # TODO: Fix this slippage
         return 0, 0
 
