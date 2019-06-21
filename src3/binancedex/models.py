@@ -3,9 +3,17 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.schema import Column, MetaData
-from sqlalchemy.types import Integer, String, Float, DateTime
+from sqlalchemy.types import Integer, String, Float, DateTime, BigInteger
 
-engine = create_engine('postgresql://postgres:password@localhost:5432/postgres')
+from binancedex.utils import get_enum, Environment
+
+environ = get_enum()
+if environ == Environment.LAPTOP:
+    engine = create_engine(
+        'postgresql://postgres:password@localhost:5432/postgres')
+if environ == Environment.DOCKER:
+    engine = create_engine(
+        'postgresql://postgres:password@postgres:5432/postgres')
 
 SCHEMA_NAME = 'binance'
 
@@ -23,6 +31,53 @@ class Address(Base):
     def __init__(self, address, token):
         self.address = address
         self.token = token
+
+
+class Trade(Base):
+    __tablename__ = 'trades'
+
+    id = Column(Integer, primary_key=True)
+    trade_id = Column(String)
+    block_height = Column(Integer)
+    symbol = Column(String)
+    price = Column(Float)
+    quantity = Column(Float)
+    buyer_order_id = Column(String)
+    seller_order_id = Column(String)
+    buyer_id = Column(String)
+    seller_id = Column(String)
+    buyer_fee = Column(String)
+    seller_fee = Column(String)
+    base_asset = Column(String)
+    quote_asset = Column(String)
+    time = Column(BigInteger)
+
+    def __init__(self, trade_id, block_height, symbol, price, quantity,
+                 buyer_order_id,
+                 seller_order_id, buyer_id, seller_id, buyer_fee, seller_fee,
+                 base_asset, quote_asset, time):
+        self.block_height = block_height
+        self.seller_order_id = seller_order_id
+        self.buyer_order_id = buyer_order_id
+        self.quantity = quantity
+        self.price = price
+        self.symbol = symbol
+        self.trade_id = trade_id
+        self.buyer_id = buyer_id
+        self.seller_id = seller_id
+        self.buyer_fee = buyer_fee
+        self.seller_fee = seller_fee
+        self.base_asset = base_asset
+        self.quote_asset = quote_asset
+        self.time = time
+
+    @staticmethod
+    def from_trade(t):
+        trade = Trade(t['tradeId'], t['blockHeight'], t['symbol'], t['price'],
+                      t['quantity'], t['buyerOrderId'], t['sellerOrderId'],
+                      t['buyerId'], t['sellerId'], t['buyFee'], t['sellFee'],
+                      t['baseAsset'], t['quoteAsset'], t['time'])
+        return trade
 
 
 class Transaction(Base):
@@ -54,7 +109,7 @@ class Transaction(Base):
         self.symbol = symbol
         self.price = price
         self.quantity = quantity
-        self.cumulate_quantity = float(cumulateQuantity)
+        self.cumulate_quantity = cumulateQuantity
         self.fee = fee
         self.order_create_time = orderCreateTime
         self.transaction_time = transactionTime
