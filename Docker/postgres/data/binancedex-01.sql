@@ -31,3 +31,30 @@ CREATE TABLE binance.transaction (
 )
 
 ;
+
+
+CREATE TABLE binance.trades (
+    id SERIAL NOT NULL,
+    trade_id TEXT NOT NULL,
+    block_height INTEGER NOT NULL,
+    symbol TEXT NOT NULL,
+    price DOUBLE PRECISION NOT NULL,
+    quantity DOUBLE PRECISION NOT NULL,
+    buyer_order_id TEXT NOT NULL,
+    seller_order_id TEXT NOT NULL,
+    buyer_id TEXT NOT NULL,
+    seller_id TEXT NOT NULL,
+    buyer_fee TEXT NOT NULL,
+    seller_fee TEXT NOT NULL,
+    base_asset TEXT NOT NULL,
+    quote_asset TEXT NOT NULL,
+    time BIGINT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (trade_id)
+)
+
+;
+
+CREATE INDEX ix_binance_trades_buyer_id ON binance.trades (buyer_id);
+CREATE INDEX ix_binance_trades_seller_id ON binance.trades (seller_id);
+CREATE INDEX ix_binance_address_address ON binance.address (address);
