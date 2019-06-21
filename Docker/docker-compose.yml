@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  binancedex:
+    build:
+      context: ..
+      dockerfile: Docker/binancedex.Dockerfile
+    container_name: binancedex
+    command: /usr/local/bin/python -m binancedex.serve
+    ports:
+      - "5001:5001"
+  postgres:
+    build:
+      context: ..
+      dockerfile: Docker/postgres/Dockerfile
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
