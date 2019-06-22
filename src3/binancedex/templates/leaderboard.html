@@ -1,87 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Lunar Landing Trading Competition</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
-
 <div class="container">
-    <div class="section">
-        <h2>Lunar Landing Trading Competition</h2>
-        <p>UND Binance DEX Top Traders Leaderboard</p>
-
-
-        <p>Lunar Landing Trading Competition closes on July 20th at 00:00 UTC.
-            We will</p>
-        <p>use our official Telegram channel to communicate and discuss the</p>
-        <p>competition. Join the conversation 👉
-            https://t.me/unificationfoundation</p>
-        <p>Scroll to bottom of this page for reward details.</p>
+    <div class="img"><img src="https://i.imgur.com/daMZh1u.png"></div>
+    <div class="sectiontop">
+        <center>
+            <h3>Lunar Landing Trading Competition</h3>
+            <h4>UND Binance DEX Top Traders Leaderboard</h4>
+            <hr>
+            <p>Lunar Landing Trading Competition closes on July 20th at 00:00
+                UTC. We will use our <a
+                        href="https://t.me/unificationfoundation">official
+                    Telegram channel</a> to communicate and discuss the
+                competition. Read our recent Medium post for full details about
+                <a href="https://medium.com/unificationfoundation/the-official-listing-of-und-on-binance-dex-lunar-landing-trading-competition-airdrop-b52ad3d3061a">UND's
+                    recent listing on Binance DEX</a>. </p>
+            </p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZdlaTD4cgufOLNZSIlmCCsdvoDuPua-8n8fYETZYXVNITlA/viewform">
+                <h5>Claim Your Wallet To Earn Rewards</h5></a> <em> Note: The
+            below numbers are unofficial and subject to verification.</em></p>
+        </center>
     </div>
+    <div class="heading">
+        <h3>Top 10 Traders</h3>
+    </div>
+    <div class="section2">
 
-
-    <div class="section">
-        <h3>Top 10 UND Traders</h3>
-        Are you one of the Top Traders?
-        <a href="https://docs.google.com/forms/d/1uBPBMXSh9-KKoPtdSTd5lbZBC_0trnHwmCnfvT6RKfA/prefill">Claim
-            your wallet address here</a>
-        {% for v in traders[0:10] %}
-            <div>
+        <div>
+            {% for v in traders[0:10] %}
                 <div>{{ '%.04f' % v['trade_total'] }} BNB Traded - <a
                         href="https://explorer.binance.org/address/{{ v['address'] }}"> {{ v['address'] }}</a>
+                    <p>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-
-    <div class="section">
-        <h3>Running up</h3>
-        {% for v in traders[10:] %}
+    <div class="heading">
+        <h3>Wallets To Watch</h3>
+    </div>
+    <div class="section3">
+        {% for v in traders[10:20] %}
             <div>{{ '%.04f' % v['trade_total'] }} BNB Traded - <a
                     href="https://explorer.binance.org/address/{{ v['address'] }}"> {{ v['address'] }}</a>
+                <p>
             </div>
         {% endfor %}
     </div>
-
-
-    <div class="section">
-        <h3>TOP TRADER REWARDS</h3>
-        <p>Rank 1: 1 BTC + 100,000 UND</p>
-        <p>Rank 2: 200 BNB + 50,000 UND</p>
-        <p>Rank 3: 100 BNB + 50,000 UND</p>
-        <p>Rank 4: 75 BNB + 50,000 UND</p>
-        <p>Rank 5: 50 BNB + 25,000 UND</p>
-        <p>Rank 6: 25 BNB + 15,000 UND</p>
-        <p>Rank 7: 15 BNB + 15,000 UND</p>
-        <p>Rank 8: 15 BNB + 10,000 UND</p>
-        <p>Rank 9: 10 BNB + 10,000 UND</p>
-        <p>Rank 10: 5 BNB + 10,000 UND</p>
-
-        Note: If at the end of the contest 200 BNB is worth more than
-        1 BTC we will swap Reward Levels 1 & 2
-
-        Please note three important aspects:
-        <p>1) The minimum qualification to receive rewards for the Top 5 is that
-            there is a minimum amount of 50K USD equivalent UND volume per day
-            (across all traders). If this is not met then rewards will be scaled
-            down to the lower levels. If you intend to compete we recommend you
-            plan to trade a minimum 20K USD equivalent per day consistently to
-            ensure we meet this threshold.</p>
-
-        <p>2) The UND rewards will only be awarded if we win the official
-            competition and are listed on Binance.com — however, the BTC/BNB
-            rewards will be paid regardless of outcome.</p>
-
-        <p>3) We reserve the right to modify or adjust as needed if something
-            doesn’t seem to be working. The purpose of this competition is to
-            bring awareness to UND and expand the reach of the community.</p>
+    <div class="heading">
+        <h3>Top Trader Rewards</h3>
     </div>
+    <div class="section4">
+        <p style="line-height:12px">
+            <strong>Rank 1:</strong> 1 BTC + 100,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 2:</strong> 200 BNB + 50,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 3:</strong> 100 BNB + 50,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 4</strong> 75 BNB + 50,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 5:</strong> 50 BNB + 25,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 6:</strong> 25 BNB + 15,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 7:</strong> 15 BNB + 15,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 8:</strong> 15 BNB + 10,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 9:</strong> 10 BNB + 10,000 UND
+        <p style="line-height:12px">
+            <strong>Rank 10:</strong> 5 BNB + 10,000 UND
+        <p style="line-height:12px">
+            <br>
+            <em>Note: If at the end of the contest 200 BNB is worth more than 1
+                BTC we will swap Reward Levels 1 & 2</em>
+    </div>
+    <div class="section5">
+        <div class="heading">
+            <h3>Important Notes</h3>
+            <p>1) The minimum qualification to receive rewards for the Top 5 is
+                that there is a minimum amount of 50K USD equivalent UND volume
+                per day (across all traders). If this is not met then rewards
+                will be scaled down to the lower levels. If you intend to
+                compete we recommend you plan to trade a minimum 20K USD
+                equivalent per day consistently to ensure we meet this
+                threshold.</p>
 
-    <div class="section">
-        <div>
-            <h4>Technicals</h4>
+            <p>2) The UND rewards will only be awarded if we win the official
+                competition and are listed on Binance.com — however, the BTC/BNB
+                rewards will be paid regardless of outcome.</p>
+
+            <p>3) We reserve the right to modify or adjust as needed if
+                something doesn’t seem to be working. The purpose of this
+                competition is to bring awareness to UND and expand the reach of
+                the community.</p>
+        </div>
+    </div>
+    <div class="section5">
+        <div class="heading">
+            <h3>Technical Output</h3>
             <div>Total number of trades considered: {{ num_trades }}</div>
             <div>Total volume 24 Hour: {{ total_volume_24 }} BNB</div>
             <div>Total volume: {{ total_volume }} BNB</div>
@@ -91,9 +114,12 @@
             <div>Leaderboard generated at: {{ generated_at }} GMT</div>
         </div>
     </div>
-
+    <div>
+        Source code for this leaderboard:
+        <a href="https://github.com/unification-com/binancedex">https://github.com/unification-com/binancedex</a>
+    </div>
 </div>
-
-
+</div>
 </body>
+
 </html>
