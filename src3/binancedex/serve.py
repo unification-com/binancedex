@@ -2,8 +2,6 @@ from logging.config import dictConfig
 
 from flask import Flask, json
 
-from binancedex.cli import process_trades
-
 app = Flask(__name__)
 
 dictConfig({
@@ -33,14 +31,6 @@ dictConfig({
         'handlers': ['file', 'stdout']
     }
 })
-
-
-@app.route('/traders')
-def traders():
-    d = process_trades()
-    data = json.dumps(d, indent=2, separators=(',', ':'))
-    return data, 200
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
