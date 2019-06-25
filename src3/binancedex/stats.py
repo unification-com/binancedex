@@ -50,22 +50,50 @@ def render():
 def get_fees(trade):
     """
     Fees can be a little bit complicated:
+
+    These are probably fees for cancelled trades
     #Cxl:1;BNB:0.00010432;
 
     :return:
     """
     try:
-        buyer_currency, buyer_amount = trade.buyer_fee[0:-1].split(':')
-        seller_currency, seller_amount = trade.seller_fee[0:-1].split(':')
-        if buyer_currency == 'BNB' and seller_currency == 'BNB':
-            return float(buyer_amount), float(seller_amount)
+        if trade.buyer_fee[:7] == '#Cxl:1;' or \
+                trade.buyer_fee[:7] == '#Cxl:2;':
+            buyer_fee = trade.buyer_fee[7:]
         else:
-            # TODO: Fix this slippage
-            return 0, 0
+            buyer_fee = trade.buyer_fee
 
+        if trade.seller_fee[:7] == '#Cxl:1;' or \
+                trade.seller_fee[:7] == '#Cxl:2;':
+            seller_fee = trade.seller_fee[7:]
+        else:
+            seller_fee = trade.seller_fee
+
+        buyer_currency, buyer_amount = buyer_fee[0:-1].split(':')
+        seller_currency, seller_amount = seller_fee[0:-1].split(':')
+
+        slippage = 0
+        if buyer_currency == 'BNB':
+            buyer_ret = float(buyer_amount)
+        else:
+            if buyer_currency != 'UND-EBC':
+                raise Exception('Unhandled currency')
+            slippage = slippage + float(buyer_amount)
+            buyer_ret = 0
+
+        if seller_currency == 'BNB':
+            seller_ret = float(buyer_amount)
+        else:
+            if seller_currency != 'UND-EBC':
+                raise Exception('Unhandled currency')
+            slippage = slippage + float(buyer_amount)
+            seller_ret = 0
+
+        return buyer_ret, seller_ret, slippage
     except Exception as e:
-        # TODO: Fix this slippage
-        return 0, 0
+        # Don't crash while trying to calculate fees that we don't use
+        log.error(e)
+        return 0, 0, 0
 
 
 def trade_groups_for_address(trader_address):
@@ -102,6 +130,8 @@ def process_trades():
     volume_total = 0
     volume_total_24 = 0
     fee_total = 0
+    total_fees = 0
+    total_fee_slippage = 0
 
     day_ago = all_trades[0].time - ONE_DAY
 
@@ -122,8 +152,10 @@ def process_trades():
         if not exists:
             Session.add(seller_address)
 
-        buyer_fee, seller_fee = get_fees(trade)
-        total = (trade.price * trade.quantity) - (buyer_fee + seller_fee)
+        buyer_fee, seller_fee, slippage = get_fees(trade)
+        total_fee_slippage = total_fee_slippage + slippage
+        total_fees = total_fees + (buyer_fee + seller_fee)
+        total = (trade.price * trade.quantity)
 
         trade_hist[trade.buyer_id].add(trade)
         trade_hist[trade.seller_id].add(trade)
@@ -159,6 +191,8 @@ def process_trades():
         'total_volume': volume_total,
         'total_volume_24': volume_total_24,
         'number_of_trades': len(traders),
+        'total_fees': total_fees,
+        'total_slippage': total_fee_slippage,
         'traders': trader_stats,
         'generated_at': datetime.utcnow(),
         'first_trade': datetime.utcfromtimestamp(all_trades[-1].time / 1000),
