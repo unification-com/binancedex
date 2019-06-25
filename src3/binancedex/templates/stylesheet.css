@@ -1,118 +1,98 @@
 @charset "utf-8";
-
-
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
-
 body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
     font-size: 14px;
     /*color: #6f6f6f;*/
     font-weight: 400;
     line-height: 22px;
-  width: 100%;
-  min-height: 100vh;
-
-  background: rgba(21,23,67,1);
-background: -moz-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(21,23,67,1)), color-stop(54%, rgba(8,138,101,1)), color-stop(100%, rgba(21,23,67,1)));
-background: -webkit-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
-background: -o-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
-background: -ms-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
-background: linear-gradient(to bottom, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151743', endColorstr='#151743', GradientType=0 );
-
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 33px 30px;
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(10, 15, 48, 1);
+    background: rgba(21,23,67,1);
+    background: -moz-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(21,23,67,1)), color-stop(54%, rgba(8,138,101,1)), color-stop(100%, rgba(21,23,67,1)));
+    background: -webkit-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
+    background: -o-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
+    background: -ms-linear-gradient(top, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
+    background: linear-gradient(to bottom, rgba(21,23,67,1) 0%, rgba(8,138,101,1) 54%, rgba(21,23,67,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151743', endColorstr='#151743', GradientType=0 );
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 33px 30px;
 }
 }
-
-body, html {
+body,
+html {
     height: 100%;
     -moz-osx-font-smoothing: grayscale;
 }
-
-a, a:active, a:focus {
+a,
+a:active,
+a:focus {
     color: #40c2dc;
     text-decoration: none;
 }
-
-a:hover, a:active {
+a:hover,
+a:active {
     color: #fff600;
     text-decoration: none;
 }
-
-a:focus, a:active, button:focus, button:active, .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
-    outline: none;
-}
-
 .container {
     margin: 0 auto;
     width: 550px;
     color: yellow;
-
 }
-
-
 .heading {
-    padding-top: 50px;
-    color: #fff ;
+    padding-top: 30px;
+    color: #fff;
 }
-
 .sectiontop {
     padding-top: 5px;
     padding-bottom: 10px;
-    color: #fff ;
+    color: #fff;
 }
 .section2 {
-  background-color: #fff ;
-  padding: 10px ;
-  border: 1px solid green ;
-  color: #000;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid green;
+    color: #000;
 }
 .section3 {
-  background-color: #fff ;
-  padding: 10px ;
-  border: 1px solid green ;
-  color: #000;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid green;
+    color: #000;
 }
 .section4 {
-  background-color: #fff ;
-  padding: 10px ;
-  border: 1px solid green ;
-  color: #000;
-
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid green;
+    color: #000;
 }
 .section5 {
     padding-top: 20px;
     padding-bottom: 10px;
-    color: #fff600 ;
+    color: #fff600;
 }
 .section6 {
-    padding-top: 5px;
+    padding-top: 20px;
     padding-bottom: 10px;
-    color: #fff ;
+    color: #fff;
 }
-
 .img {
-  text-align: center ;
-  padding: 10px ;
-  border: none;
-  i: 70px;
-
+    text-align: center;
+    padding: 10px;
+    border: none;
 }
-
-p { margin: 0em; }
 
 /* ===================================
     Typography
@@ -123,10 +103,10 @@ p { margin: 0em; }
     font-family: 'Montserrat', sans-serif;
     font-weight: 500
 }
-
 .main-font {
     font-family: 'Roboto', sans-serif;
 }
+
 
 /* heading */
 h1, h2, h3, h4, h5, h6 {
@@ -135,41 +115,34 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0;
     font-weight: 400;
 }
-
 h1 {
     font-size: 48px;
-    line-height: 48px
+    line-height: 48px;
     color: #fff;
 }
-
 h2 {
     font-size: 36px;
-    line-height: 36px
+    line-height: 36px;
     color: #fff600;
 }
-
 h3 {
     font-size: 32px;
-    line-height: 32px
+    line-height: 32px;
     color: #fff600;
 }
-
 h4 {
     font-size: 28px;
-    line-height: 28px
+    line-height: 28px;
     color: #fff;
 }
-
 h5 {
     font-size: 22px;
-    line-height: 22px
+    line-height: 22px;
     color: #fff600;
     padding-bottom: 0px;
 }
-
 h6 {
     font-size: 18px;
-    line-height: 18px
+    line-height: 18px;
     color: #fff;
 }
-
