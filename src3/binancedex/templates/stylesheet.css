@@ -6,11 +6,7 @@ body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: 14px;
-    /*color: #6f6f6f;*/
-    font-weight: 400;
-    line-height: 22px;
-    width: 100%;
-    min-height: 100vh;
+
     background: rgba(10, 15, 48, 1);
     background: -moz-linear-gradient(top, rgba(21, 23, 67, 1) 0%, rgba(8, 138, 101, 1) 54%, rgba(21, 23, 67, 1) 100%);
     /*noinspection CssInvalidFunction*/
@@ -20,17 +16,7 @@ body {
     background: -ms-linear-gradient(top, rgba(21, 23, 67, 1) 0%, rgba(8, 138, 101, 1) 54%, rgba(21, 23, 67, 1) 100%);
     background: linear-gradient(to bottom, rgba(21, 23, 67, 1) 0%, rgba(8, 138, 101, 1) 54%, rgba(21, 23, 67, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#151743', endColorstr='#151743', GradientType=0);
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 33px 30px;
 }
-
 
 body,
 html {
