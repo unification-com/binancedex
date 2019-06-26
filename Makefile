@@ -5,6 +5,9 @@
 all:
 	 docker-compose --file Docker/docker-compose.yml up --build
 
+down:
+	 docker-compose --file Docker/docker-compose.yml down
+
 fetch:
 	docker exec binancedex /usr/local/bin/python -m binancedex.cli fetch-all-trades
 
