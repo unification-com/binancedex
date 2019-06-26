@@ -20,12 +20,14 @@ calculated.
 
 Type `make` to build and start the Docker composition.
 
-Type `make fetch` to fetch all the trades from the BinanceDEX.
+Type `make fetch` to fetch all the trades from the BinanceDEX. This will fetch all the trades since UND has been listed.
 
-Type `make generate` to generate the latest trade statistics.
+Once the initial fetch is complete, type `make generate` to generate the latest trade statistics.
 
 The leaderboard.html and stylesheet.css can then be downloaded:
 ```
 docker cp binancedex:/reports/leaderboard.html leaderboard.html
 docker cp binancedex:/reports/stylesheet.css stylesheet.css
 ```
+
+Finally, the composition can be brought down with `make down`.
