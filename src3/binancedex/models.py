@@ -10,7 +10,7 @@ from binancedex.utils import get_enum, Environment
 environ = get_enum()
 if environ == Environment.LAPTOP:
     engine = create_engine(
-        'postgresql://postgres:password@localhost:5432/postgres')
+        'postgresql://postgres:password@localhost:8432/postgres')
 if environ == Environment.DOCKER:
     engine = create_engine(
         'postgresql://postgres:password@postgres:5432/postgres')
