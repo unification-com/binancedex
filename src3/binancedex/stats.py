@@ -108,7 +108,11 @@ def trade_groups_for_address(trader_address):
     for trade in trades:
         dt = datetime.utcfromtimestamp(trade.time / 1000)
         d[dt.strftime("%d-%m-%Y")].append(trade)
-    return d
+
+    return {
+        'days': d,
+        'address': trader_address
+    }
 
 
 def process_trades():
