@@ -3,6 +3,8 @@ import os
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
+from time import time
+
 
 from jinja2 import FileSystemLoader, Environment
 
@@ -137,7 +139,8 @@ def process_trades():
     total_fees = 0
     total_fee_slippage = 0
 
-    day_ago = all_trades[0].time - ONE_DAY
+    now = int(time() * 1000)
+    day_ago = now - ONE_DAY
 
     for trade in all_trades:
         if trade.quote_asset != 'BNB':
