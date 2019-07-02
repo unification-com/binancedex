@@ -5,7 +5,6 @@ from datetime import datetime
 from pathlib import Path
 from time import time
 
-
 from jinja2 import FileSystemLoader, Environment
 
 from sqlalchemy import or_
@@ -120,7 +119,8 @@ def trade_groups_for_address(trader_address):
 def process_trades():
     symbol = f'{BASE_ASSET}_BNB'
 
-    for trade in get_trades(symbol):
+    now = int(time() * 1000)
+    for trade in get_trades(symbol, now):
         exists = Session.query(Trade).filter_by(
             trade_id=trade['tradeId']).first()
         if not exists:

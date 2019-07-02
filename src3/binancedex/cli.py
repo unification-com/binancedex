@@ -1,6 +1,6 @@
 import logging
 import os
-from time import sleep
+from time import sleep, time
 
 import click
 
@@ -32,11 +32,12 @@ def fetch_all_trades():
     """
 
     symbol = f'{BASE_ASSET}_BNB'
+    now = int(time() * 1000)
 
     items = 1000
     offset = 0
     while items == 1000:
-        fetch_trades = get_trades(symbol, offset=offset)
+        fetch_trades = get_trades(symbol, now, offset=offset)
         for trade in fetch_trades:
             exists = Session.query(Trade).filter_by(
                 trade_id=trade['tradeId']).first()
@@ -59,7 +60,8 @@ def fetch_latest_trades():
     :return:
     """
     symbol = f'{BASE_ASSET}_BNB'
-    fetch_trades = get_trades(symbol)
+    now = int(time() * 1000)
+    fetch_trades = get_trades(symbol, now)
 
     for trade in fetch_trades:
         exists = Session.query(Trade).filter_by(
