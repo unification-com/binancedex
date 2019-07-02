@@ -194,11 +194,10 @@
                                                 <td>{{ "%.8f"|format(trade.price) }}</td>
                                                 <td style="text-align: right">{{ "%.0f"|format(trade.quantity) }}</td>
                                                 <td style="text-align: center">{{ trade.time }}</td>
-                                                <td>{{ 'Sell' if trade.seller_id == address else 'Buy' }}</td>
+                                                <td>{{ 'Wash' if trade.seller_id == trade.buyer_id else ('Sell' if trade.seller_id == address else 'Buy') }}</td>
                                             </tr>
                                         {% endfor %}
                                     </table>
-
                                 </div>
                             {% endfor %}
 
