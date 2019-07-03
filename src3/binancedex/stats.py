@@ -10,7 +10,7 @@ from jinja2 import FileSystemLoader, Environment
 from sqlalchemy import or_
 
 from binancedex.api import get_trades
-from binancedex.models import Session, Address, Trade
+from binancedex.models import Session, engine, Address, Trade
 from binancedex.utils import reports_store
 
 log = logging.getLogger(__name__)
@@ -132,6 +132,10 @@ def process_trades():
     total_hist = {}
 
     all_trades = Session.query(Trade).order_by(Trade.time.desc()).all()
+    all_addresses = Session.query(Address).all()
+    address_set = set()
+    for address in all_addresses:
+        address_set.add(address.address)
 
     volume_total = 0
     volume_total_24 = 0
@@ -146,18 +150,8 @@ def process_trades():
         if trade.quote_asset != 'BNB':
             raise Exception(f'An unexpected Quote Asset {trade.quote_asset}')
 
-        buyer_address = Address(trade.buyer_id, symbol)
-        seller_address = Address(trade.seller_id, symbol)
-
-        exists = Session.query(Address).filter_by(
-            address=buyer_address.address).first()
-        if not exists:
-            Session.add(buyer_address)
-
-        exists = Session.query(Address).filter_by(
-            address=seller_address.address).first()
-        if not exists:
-            Session.add(seller_address)
+        address_set.add(trade.buyer_id)
+        address_set.add(trade.seller_id)
 
         buyer_fee, seller_fee, slippage = get_fees(trade)
         total_fee_slippage = total_fee_slippage + slippage
@@ -172,7 +166,11 @@ def process_trades():
         if trade.time >= day_ago:
             volume_total_24 = volume_total_24 + total
 
-    Session.commit()
+    log.info(f'Found {len(address_set)} UND traders')
+    for address in address_set:
+        sql = f"INSERT INTO binance.address (address, token) " \
+            f"VALUES('{address}', '{symbol}') ON CONFLICT DO NOTHING;"
+        engine.execute(sql)
 
     for address, trades in trade_hist.items():
         running_total = 0
