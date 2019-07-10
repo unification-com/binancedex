@@ -34,9 +34,12 @@
 
         <div>
             {% for v in traders[0:10] %}
-                <div>{{ '%.04f' % v['trade_total'] }} BNB Traded - <a
+                <div>{{ '* ' if v['address'] == 'bnb13ls59kuvaaxq7a05rpps6z5r72nqcla3tuc4nc' }}{{ '%.04f' % v['trade_total'] }} BNB Traded - <a
                         href="https://explorer.binance.org/address/{{ v['address'] }}"> {{ v['address'] }}</a>
                     <p>
+                    {% if v['address'] == 'bnb13ls59kuvaaxq7a05rpps6z5r72nqcla3tuc4nc' %}
+                        <p>suspected wash trading, subject to verification</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
