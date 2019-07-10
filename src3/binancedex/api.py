@@ -2,14 +2,14 @@ import logging
 
 import requests as req
 
-from binancedex.stats import BASE_ASSET
-
 log = logging.getLogger(__name__)
 
 LISTING_START = '1560988800000'
 
 
 def address_set():
+    from binancedex.stats import BASE_ASSET
+
     url = 'https://explorer.binance.org/api/v1/asset-holders?page=1&rows=5&' \
           'asset=' + BASE_ASSET
     log.debug(url)
