@@ -1,8 +1,6 @@
-import time
+import logging
 
 import requests as req
-
-import logging
 
 from binancedex.stats import BASE_ASSET
 
@@ -29,26 +27,7 @@ def address_set():
     return addressSet
 
 
-def transaction_set(symbol, add):
-    """
-    I didn't write the function that only consider n minutes before now
-
-    """
-    millis = int(round(time.time() * 1000) - (8 * 60 * 60 * 1000))
-
-    url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address=' \
-        f'{add}&start={millis}&symbol={symbol}&limit=500'
-    log.debug(url)
-    ordersDataBuy = req.get(url).json()
-    orders = ordersDataBuy['order']
-    return orders
-
-
 def get_trades(symbol, stop_ts, offset=0):
-    """
-    I wrote this one
-
-    """
     url = f'https://dex-atlantic.binance.org/api/v1/trades?symbol={symbol}&' \
         f'start={LISTING_START}&stop={stop_ts}&limit=1000&' \
         f'offset={offset}'
@@ -59,10 +38,6 @@ def get_trades(symbol, stop_ts, offset=0):
 
 
 def get_orders(address):
-    """
-    And this one
-
-    """
     url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address=' \
         f'{address}&start={LISTING_START}&symbol=UND-EBC_BNB&limit=500'
     log.info(url)
