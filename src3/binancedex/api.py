@@ -4,22 +4,22 @@ import requests as req
 
 import logging
 
-log = logging.getLogger(__name__)
+from binancedex.stats import BASE_ASSET
 
-baseAsset = 'UND-EBC'
+log = logging.getLogger(__name__)
 
 LISTING_START = '1560988800000'
 
 
 def address_set():
     url = 'https://explorer.binance.org/api/v1/asset-holders?page=1&rows=5&' \
-          'asset=' + baseAsset
+          'asset=' + BASE_ASSET
     log.debug(url)
     addressData = req.get(url).json()
 
     totelCount = addressData['totalNum']
     url = 'https://explorer.binance.org/api/v1/asset-holders?page=1&rows=' + \
-          str(totelCount) + '&asset=' + baseAsset
+          str(totelCount) + '&asset=' + BASE_ASSET
     log.debug(url)
     addressData = req.get(url).json()
     assetsHolders = addressData['addressHolders']
@@ -36,8 +36,8 @@ def transaction_set(symbol, add):
     """
     millis = int(round(time.time() * 1000) - (8 * 60 * 60 * 1000))
 
-    url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address={add}&start' \
-        f'={millis}&symbol={symbol}&limit=500'
+    url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address=' \
+        f'{add}&start={millis}&symbol={symbol}&limit=500'
     log.debug(url)
     ordersDataBuy = req.get(url).json()
     orders = ordersDataBuy['order']
@@ -63,8 +63,8 @@ def get_orders(address):
     And this one
 
     """
-    url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address={address}&' \
-        f'start={LISTING_START}&symbol=UND-EBC_BNB&limit=500'
+    url = f'https://dex-atlantic.binance.org/api/v1/orders/closed?address=' \
+        f'{address}&start={LISTING_START}&symbol=UND-EBC_BNB&limit=500'
     log.info(url)
     r = req.get(url)
     return r.json()['order']
